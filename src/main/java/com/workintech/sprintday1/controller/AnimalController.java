@@ -10,9 +10,12 @@ import java.util.Map;
 @RestController
 public class AnimalController {
     private Map<Integer, Animal> animals;
-    @PostConstruct
+    @PostConstruct  // Constructor çalıştıktan sonra yalnızca tek bir defa constructor çalıştırma komutudur.
     public void init(){
+        System.out.println("Animal Map Created: (second rendered part: bcs of:Post construct)");
         animals = new HashMap<>();
     }
-
+    public AnimalController(){
+        System.out.println("Animal Created: ( first rendered part)");
+    }
 }
