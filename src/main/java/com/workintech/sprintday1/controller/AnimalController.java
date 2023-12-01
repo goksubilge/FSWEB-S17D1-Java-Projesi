@@ -2,15 +2,14 @@ package com.workintech.sprintday1.controller;
 
 import com.workintech.sprintday1.entity.Animal;
 import jakarta.annotation.PostConstruct;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/animal")
 public class AnimalController {
     private Map<Integer, Animal> animals;
     @PostConstruct  // Constructor çalıştıktan sonra yalnızca tek bir defa constructor çalıştırma komutudur.
@@ -32,4 +31,10 @@ public List<Animal> findAll(){
         return animals.get(id);
     }
 
+    @PostMapping("/")
+    public Animal save(@RequestBody Animal animal){
+        animals.put(animal.getId(),animal);
+        return animals.get(animal.getId()); // put edilmiş veriyi geri döndürüyorum bana.
+        // return animal; da olurdu. direkt post yaptığım veriyi okuyabilmek için böyle yazdım. put çalışmasa bile bana girdiğim parametreyi kaydedemeden döndürebilir. bu yüzden kayıt kontrolü şart. response 'un 200 olması şart aslında.
+    }
 }
