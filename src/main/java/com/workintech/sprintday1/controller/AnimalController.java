@@ -1,6 +1,8 @@
 package com.workintech.sprintday1.controller;
 
+import com.workintech.sprintday1.dto.AnimalResponse;
 import com.workintech.sprintday1.entity.Animal;
+import com.workintech.sprintday1.validation.AnimalValidControl;
 import jakarta.annotation.PostConstruct;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,13 +24,36 @@ public class AnimalController {
     }
 
     @GetMapping("/")  // tüm animals 'ı çağırdığım liste. şimdilik boş array []
-public List<Animal> findAll(){
+    public List<Animal> findAll(){
         System.out.println("Get All Animals (@getMapping 'e adres verdiğim anda render olur bu method)");
         return animals.values().stream().toList();
     }
     @GetMapping("/{id}")  //  id ile (ilgili id map'te varsa) value 'nun değerini döner.
+
+    /**   İLK VALIDATION CHECK im:
     public Animal find(@PathVariable int id){
+        // ADD ID VALIDATION
+        if(!AnimalValidControl.isAnimalIdValid(id)){
+            System.out.println("This ID < 0  !!!");
+            return null;
+        } else {
         return animals.get(id);
+        }
+    }
+     */
+    /**
+     * Postman de geri dönüş değerimi anlamlandırmak için class açıp verilerimi gizledim. İstediğim değerleri açtım. AnimalResponse class 'ıyla geri dönüş verileri filtrelendi.
+     */
+
+    public AnimalResponse find(@PathVariable int id){
+        // ADD ID VALIDATION
+        if(!AnimalValidControl.isAnimalIdValid(id)){
+            return new AnimalResponse(null,"Animal id is not valid: " + id,400);
+        }
+        if(!AnimalValidControl.isAnimalContains(animals,id)){
+            return new AnimalResponse(null,"Animal with given id is not exist: " + id,400);
+        }
+        return new AnimalResponse(animals.get(id).getName(),"Success", 200);
     }
 
     @PostMapping("/")
