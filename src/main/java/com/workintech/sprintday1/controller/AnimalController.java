@@ -37,4 +37,28 @@ public List<Animal> findAll(){
         return animals.get(animal.getId()); // put edilmiş veriyi geri döndürüyorum bana.
         // return animal; da olurdu. direkt post yaptığım veriyi okuyabilmek için böyle yazdım. put çalışmasa bile bana girdiğim parametreyi kaydedemeden döndürebilir. bu yüzden kayıt kontrolü şart. response 'un 200 olması şart aslında.
     }
+
+    @PutMapping("/{id}")
+    public Animal update(@PathVariable int id, @RequestBody Animal animal){
+        animals.put(id,animal);
+        // animals.put(id,new Animal(id, animal.getName(), animal.getWeight()));  // (Alternative)
+        return animals.get(id);
+    }
 }
+/**
+    {
+            "id": 1,
+            "name": "smellyCat",
+            "weight": 4.0
+            },
+            {
+            "id": 3,
+            "name": "thinCat",
+            "weight": 7.0
+            },
+            {
+            "id": 5,
+            "name": "pisCat",
+            "weight": 8.0
+            }
+ */
