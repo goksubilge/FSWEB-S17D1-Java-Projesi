@@ -47,6 +47,7 @@ public List<Animal> findAll(){
 
     @DeleteMapping("/{id}")
     public Animal delete (@PathVariable int id){
+        System.out.println(animals.get(id).getName() + " silindi !");
         return animals.remove(id);  // sildirdiğim id 'yi döndürüyorum.
     }
 }
