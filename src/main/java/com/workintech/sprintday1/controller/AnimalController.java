@@ -44,8 +44,14 @@ public List<Animal> findAll(){
         // animals.put(id,new Animal(id, animal.getName(), animal.getWeight()));  // (Alternative)
         return animals.get(id);
     }
+
+    @DeleteMapping("/{id}")
+    public Animal delete (@PathVariable int id){
+        return animals.remove(id);  // sildirdiğim id 'yi döndürüyorum.
+    }
 }
 /**
+ * Mock Post Data Ex:
     {
             "id": 1,
             "name": "smellyCat",
@@ -60,5 +66,10 @@ public List<Animal> findAll(){
             "id": 5,
             "name": "pisCat",
             "weight": 8.0
+            },
+            {
+             "id": 8,
+             "name": "softCat",
+             "weight": 11.0
             }
  */
